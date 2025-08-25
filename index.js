@@ -66,7 +66,7 @@ exports.subscribe = function subscribe(name, subscription) {
   return channel(name).subscribe(subscription)
 }
 
-exports.unsucsribe = function unsubscribe(name, subscription) {
+exports.unsubscribe = function unsubscribe(name, subscription) {
   return channel(name).unsubscribe(subscription)
 }
 
