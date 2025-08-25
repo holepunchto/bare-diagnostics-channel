@@ -1,0 +1,30 @@
+{
+  "name": "bare-diagnostics-channel",
+  "version": "1.0.0",
+  "description": "Create and publish data to named channels for diagnostics purposes",
+  "exports": {
+    "./package": "./package.json",
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "prettier . --check && bare test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holepunchto/bare-diagnostics-channel.git"
+  },
+  "author": "Holepunch",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/holepunchto/bare-diagnostics-channel/issues"
+  },
+  "homepage": "https://github.com/holepunchto/bare-diagnostics-channel#readme",
+  "devDependencies": {
+    "brittle": "^3.2.1",
+    "prettier": "^3.4.2",
+    "prettier-config-standard": "^7.0.0"
+  }
+}
