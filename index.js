@@ -48,6 +48,8 @@ class DiagnosticsChannel {
   }
 }
 
+module.exports = exports = DiagnosticsChannel
+
 exports.Channel = DiagnosticsChannel
 
 function channel(name) {
