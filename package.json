@@ -1,6 +1,6 @@
 {
   "name": "bare-diagnostics-channel",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Create and publish data to named channels for diagnostics purposes",
   "exports": {
     "./package": "./package.json",
