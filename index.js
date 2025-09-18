@@ -77,3 +77,68 @@ exports.hasSubscribers = function hasSubscribers(name) {
 
   return channel.hasSubscribers
 }
+
+class TracingChannel {
+  constructor(nameOrChannels) {
+    if (typeof nameOrChannels === 'string') {
+      this.start = channel(`tracing:${nameOrChannels}:start`)
+      this.end = channel(`tracing:${nameOrChannels}:end`)
+      this.error = channel(`tracing:${nameOrChannels}:error`)
+    } else {
+      this.start = nameOrChannels.start
+      this.end = nameOrChannels.end
+      this.error = nameOrChannels.error
+    }
+  }
+
+  get hasSubscribers() {
+    return (
+      this.start.hasSubscribers ||
+      this.end.hasSubscribers ||
+      this.error.hasSubscribers
+    )
+  }
+
+  subscribe(subscriptions) {
+    const events = ['start', 'end', 'error']
+
+    for (const event of events) {
+      const subscription = subscriptions[event]
+
+      if (subscription) this[event].subscribe(subscription)
+    }
+  }
+
+  unsubscribe(subscriptions) {
+    const events = ['start', 'end', 'error']
+
+    return events.reduce((done, event) => {
+      const subscription = subscriptions[event]
+
+      if (subscription) {
+        return this[event].unsubscribe(subscription) && done
+      } else {
+        return done
+      }
+    }, true)
+  }
+
+  traceSync(fn, context = {}, thisArg, ...args) {
+    try {
+      this.start.publish(context)
+      context.result = fn.call(thisArg, ...args)
+      return context.result
+    } catch (err) {
+      context.error = err
+      this.error.publish(context)
+    } finally {
+      this.end.publish(context)
+    }
+  }
+}
+
+function tracingChannel(nameOrChannels) {
+  return new TracingChannel(nameOrChannels)
+}
+
+exports.tracingChannel = tracingChannel
