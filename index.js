@@ -25,10 +25,7 @@ class DiagnosticsChannel {
 
     if (i === -1) return false
 
-    this._subscribers = [
-      ...this._subscribers.slice(0, i),
-      ...this._subscribers.slice(i + 1)
-    ]
+    this._subscribers = [...this._subscribers.slice(0, i), ...this._subscribers.slice(i + 1)]
 
     return true
   }
@@ -92,11 +89,7 @@ class TracingChannel {
   }
 
   get hasSubscribers() {
-    return (
-      this.start.hasSubscribers ||
-      this.end.hasSubscribers ||
-      this.error.hasSubscribers
-    )
+    return this.start.hasSubscribers || this.end.hasSubscribers || this.error.hasSubscribers
   }
 
   subscribe(subscriptions) {
